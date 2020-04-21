@@ -1,7 +1,7 @@
 import csv
 import sys
 
-from util import Node, StackFrontier, QueueFrontier
+from package.util import Node, StackFrontier, QueueFrontier
 
 # Maps names to a set of corresponding person_ids
 names = {}
@@ -91,8 +91,39 @@ def shortest_path(source, target):
 
     If no possible path, returns None.
     """
-
     # TODO
+    root = Node(state=source, parent=None, action=neighbors_for_person(source))
+    frontier = QueueFrontier()
+    if source != target:
+        frontier.add(root)
+    found = False
+    explored = set()
+
+    # find the target node using BFS
+    while not found:
+        if frontier.empty():
+            return None
+        node = frontier.remove()
+        explored.add(node)
+        for neighbor in node.action:
+            child = Node(state=neighbor, parent=node, action=neighbors_for_person(neighbor[1]))
+            if child.state[1] == target:
+                found = True
+                result = child
+                break
+            if not frontier.contains_state(child.state) and child not in explored:
+                frontier.add(child)
+            
+    # create the path and return it 
+    path = []
+    node = result
+    while node.parent != None:
+        path.append(node.state)
+        node = node.parent
+    path.reverse()
+    return path
+    
+    
     raise NotImplementedError
 
 
