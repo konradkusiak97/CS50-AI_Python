@@ -25,7 +25,6 @@ def player(board):
     """
     countX = 0
     countO = 0
-
     # Go through the board counting X and O
     for row in board:
         for col in row:
@@ -33,7 +32,6 @@ def player(board):
                 countO+=1
             if col == X:
                 countX+=1
-
     # Return X if it is the first move
     if countX == 0 and countO == 0:
         return X
@@ -51,11 +49,11 @@ def actions(board):
     """
     Returns set of all possible actions (i, j) available on the board.
     """
-    actns = set()
+    actns = []
     for i in range(len(board)):
         for j in range(len(board[i])):
             if board[i][j] == EMPTY:
-                actns.add((i, j))
+                actns.append((i, j))
     return actns
     raise NotImplementedError
 
@@ -65,6 +63,8 @@ def result(board, action):
     Returns the board that results from making move (i, j) on the board.
     """
     # Raise an error in case of invalid action 
+    if action == None:
+        raise NameError("invalid action")
     for a in action:
         if a not in (0,1,2):
             raise NameError("Action out of board")
@@ -159,10 +159,29 @@ def minimax(board):
     """
     if terminal(board):
         return None
+
+    finalAction = None
     if player(board) == X:
-        return maxValue(board)
+        maximum = -math.inf
+        for action in actions(board):
+            v = minValue(result(board,action))
+            if v == 1:
+                return action
+            elif v > maximum:
+                maximum = v
+                finalAction = action
+        return finalAction
     else:
-        return minValue(board)
+        minimum = math.inf
+        for action in actions(board):
+            v = maxValue(result(board, action))
+            if v == -1:
+                return action
+            elif v < minimum:
+                minimum = v
+                finalAction = action
+        return finalAction
+        
 
     raise NotImplementedError
 
@@ -172,6 +191,8 @@ def minValue(board):
     v = math.inf
     for action in actions(board):
         v = min(v, maxValue(result(board, action)))
+        if v == -1:
+            return v
     return v
 
 def maxValue(board):
@@ -180,4 +201,6 @@ def maxValue(board):
     v = -math.inf
     for action in actions(board):
         v = max(v, minValue(result(board, action)))
+        if v == 1:
+            return v
     return v
