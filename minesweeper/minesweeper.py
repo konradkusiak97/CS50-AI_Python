@@ -129,9 +129,7 @@ class Sentence():
         if cell in self.cells:
             self.cells.remove(cell)
             self.count -= 1
-        return 
-
-        raise NotImplementedError
+        
 
     def mark_safe(self, cell):
         """
@@ -140,9 +138,7 @@ class Sentence():
         """
         if cell in self.cells:
             self.cells.remove(cell)
-        return 
-
-        raise NotImplementedError
+       
 
 
 class MinesweeperAI():
@@ -204,54 +200,17 @@ class MinesweeperAI():
 
         # 3)
         newCells = set()
-        if cell[0]+1 < self.height:
-            nCell = (cell[0]+1, cell[1])
-            if nCell in self.mines:
-                count -= 1
-            if nCell not in self.safes and nCell not in self.mines:
-                newCells.add(nCell)     # Direct up
-            if cell[1]+1 < self.width:
-                nCell = (cell[0]+1, cell[1]+1)
-                if nCell in self.mines:
+        for i in range(cell[0]-1, cell[0]+2):
+            for j in range(cell[1]-1, cell[1]+2):
+                
+                if (i, j) == cell:
+                    continue
+                
+                if (i, j) in self.mines:
                     count -= 1
-                if nCell not in self.safes and nCell not in self.mines:
-                    newCells.add(nCell)     # Rigt up
-            if cell[1]-1 >= 0:
-                nCell = (cell[0]+1, cell[1]-1)
-                if nCell in self.mines:
-                    count -= 1
-                if nCell not in self.safes and nCell not in self.mines:
-                    newCells.add(nCell)     # Left up
-        if cell[1]-1 >= 0:
-            nCell = (cell[0], cell[1]-1)
-            if nCell in self.mines:
-                count -= 1
-            if nCell not in self.safes and nCell not in self.mines:
-                newCells.add(nCell)     # Direct left
-        if cell[1]+1 < self.width:
-            nCell = (cell[0], cell[1]+1)
-            if nCell in self.mines:
-                count -= 1
-            if nCell not in self.safes and nCell not in self.mines:
-                newCells.add(nCell)     # Direct right
-        if cell[0]-1 >= 0:
-            nCell = (cell[0]-1, cell[1])
-            if nCell in self.mines:
-                count -= 1
-            if nCell not in self.safes and nCell not in self.mines:
-                newCells.add(nCell)     # Direct bottom
-            if cell[1]+1 < self.width:
-                nCell = (cell[0]-1, cell[1]+1)
-                if nCell in self.mines:
-                    count -= 1
-                if nCell not in self.safes and nCell not in self.mines:
-                    newCells.add(nCell)     # Rigt bottom
-            if cell[1]-1 >= 0:
-                nCell = (cell[0]-1, cell[1]-1)
-                if nCell in self.mines:
-                    count -= 1
-                if nCell not in self.safes and nCell not in self.mines:
-                    newCells.add(nCell)     # Left bottom
+                if 0 <= i < self.height and 0 <= j < self.width:
+                    if (i, j) not in self.mines and (i, j) not in self.safes:
+                        newCells.add((i,j))
             
         newSentence = Sentence(newCells, count)
         self.knowledge.append(newSentence)
@@ -271,13 +230,14 @@ class MinesweeperAI():
         for sentence in newKnowledge:
             for otherSent in newKnowledge:
                 if sentence.cells != otherSent.cells:
-                    if sentence.cells.issubset(otherSent.cells):
+                    if sentence.cells.issubset(otherSent.cells) and len(sentence.cells) > 0:
                         newCount = otherSent.count - sentence.count
                         newCells = otherSent.cells - sentence.cells
                         newSentence = Sentence(newCells, newCount)
                         newKnowledge.remove(otherSent)
-                        self.knowledge.append(newSentence)
                         self.knowledge.remove(otherSent)
+                        self.knowledge.append(newSentence)
+                        
         
 
     def make_safe_move(self):
@@ -305,17 +265,13 @@ class MinesweeperAI():
         """
         totalNum = self.height * self.width
         possiblNum = totalNum - len(self.mines) - len(self.moves_made)
-        chosenBefore = set()
 
         while True:
+            if possiblNum == 0:
+                return None
             row = random.randint(0, self.height-1)
             col = random.randint(0, self.width-1)
-            if (row, col) not in chosenBefore:
-                chosenBefore.add((row, col))
             if (row, col) not in self.moves_made and (row, col) not in self.mines:
                 return (row, col)
-            if len(chosenBefore) == possiblNum:
-                return None
-
 
         raise NotImplementedError
