@@ -32,3 +32,18 @@ Tasks: "Degrees", "Tic-Tac-Toe"
 
     Full description of the task can be found at: https://cs50.harvard.edu/ai/projects/0/tictactoe/
     
+WEEK 1
+
+Tasks: "Knigths", "Minesweeper"
+
+    1. Knights
+
+    2. Minesweeper
+
+WEEK 2
+
+Tasks: "PageRank", "Heredity"
+
+    1. PageRank
+
+    2. Heredity
