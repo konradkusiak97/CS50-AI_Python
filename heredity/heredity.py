@@ -1,6 +1,7 @@
 import csv
 import itertools
 import sys
+import math
 
 PROBS = {
 
@@ -211,27 +212,83 @@ def joint_probability(people, one_gene, two_genes, have_trait):
                 probF = PROBS['mutation']
                 prob = 2*probF*probM*trait
                 multValues[person] = prob
+
             elif mother in zero_gene and father in zero_gene:
                 probM = PROBS['mutation']
                 probF = 1 - PROBS['mutation']
                 prob = 2*probM*probF*trait
                 multValues[person] = prob
+
             elif (mother in one_gene and father in two_genes) or (mother in two_genes and father in one_gene):
                 prob1 = [0.5 - PROBS['mutation'], 0.5 + PROBS['mutation']]
                 prob2 = [PROBS['mutation'], 1-PROBS['mutation']]
                 prob = (prob1[0]*prob2[0] + prob1[1]*prob2[1])*trait
                 multValues[person] = prob
+
             elif (mother in zero_gene and father in two_genes) or (mother in two_genes and father in zero_gene):
                 prob0 = [PROBS['mutation'], 1-PROBS['mutation']]
                 prob2 = [PROBS['mutation'], 1-PROBS['mutation']]
                 prob = (prob0[0]*prob2[0]+prob0[1]*prob2[1])*trait
                 multValues[person] = prob
+
             elif (mother in zero_gene and father in one_gene) or (mother in one_gene and father in zero_gene):
                 prob0 = [PROBS['mutation'], 1-PROBS['mutation']]
                 prob1 = [0.5+PROBS['mutation'], 0.5-PROBS['mutation']]
                 prob = (prob0[0]*prob1[0]+prob0[1]*prob1[1])*trait
                 multValues[person] = prob
 
+    for person in two_genes:
+        if person in have_trait:
+            trait = PROBS['trait'][2][True]
+        else:
+            trait = PROBS['trait'][2][False]
+        if people[person]['mother'] == None:
+            prob = PROBS['gene'][2]
+            prob *= trait
+            multValues[person] = prob
+        else:
+            mother = people[person]['mother']
+            father = people[person]['father']
+
+            if mother in one_gene and father in one_gene:
+                probM = 0.5 - PROBS['mutation']
+                probF = 0.5 - PROBS['mutation']
+                prob = probM*probF*trait
+                multValues[person] = prob
+
+            elif mother in two_genes and father in two_genes:
+                probM = 1 - PROBS['mutation']
+                probF = 1 - PROBS['mutation']
+                prob = probF*probM*trait
+                multValues[person] = prob
+
+            elif mother in zero_gene and father in zero_gene:
+                probM = PROBS['mutation']
+                probF = PROBS['mutation']
+                prob = probM*probF*trait
+                multValues[person] = prob
+
+            elif (mother in one_gene and father in two_genes) or (mother in two_genes and father in one_gene):
+                prob1 = 0.5-PROBS['mutation']
+                prob2 = 1-PROBS['mutation']
+                prob = prob1*prob2*trait
+                multValues[person] = prob
+
+            elif (mother in zero_gene and father in two_genes) or (mother in two_genes and father in zero_gene):
+                prob0 = PROBS['mutation']
+                prob2 = 1-PROBS['mutation']
+                prob = prob0*prob2*trait
+                multValues[person] = prob
+
+            elif (mother in zero_gene and father in one_gene) or (mother in one_gene and father in zero_gene):
+                prob0 = PROBS['mutation']
+                prob1 = 0.5-PROBS['mutation']
+                prob = prob0*prob1*trait
+                multValues[person] = prob
+
+    product = math.prod(list(multValues.values()))
+    return product
+    
 def update(probabilities, one_gene, two_genes, have_trait, p):
     """
     Add to `probabilities` a new joint probability `p`.
