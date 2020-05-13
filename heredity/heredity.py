@@ -1,7 +1,6 @@
 import csv
 import itertools
 import sys
-import math
 
 PROBS = {
 
@@ -286,9 +285,11 @@ def joint_probability(people, one_gene, two_genes, have_trait):
                 prob = prob0*prob1*trait
                 multValues[person] = prob
 
-    product = math.prod(list(multValues.values()))
-    return product
-    
+    result = 1
+    for v in list(multValues.values()):
+        result *= v
+    return result
+
 def update(probabilities, one_gene, two_genes, have_trait, p):
     """
     Add to `probabilities` a new joint probability `p`.
@@ -296,7 +297,28 @@ def update(probabilities, one_gene, two_genes, have_trait, p):
     Which value for each distribution is updated depends on whether
     the person is in `have_gene` and `have_trait`, respectively.
     """
-    raise NotImplementedError
+    zero_gene = set(probabilities.keys()) - (one_gene|two_genes)
+
+    for person in one_gene:
+        probabilities[person]['gene'][1] += p
+        if person in have_trait:
+            probabilities[person]['trait'][True] += p
+        else:
+            probabilities[person]['trait'][False] += p
+
+    for person in two_genes:
+        probabilities[person]['gene'][2] += p
+        if person in have_trait:
+            probabilities[person]['trait'][True] += p
+        else:
+            probabilities[person]['trait'][False] += p
+
+    for person in zero_gene:
+        probabilities[person]['gene'][0] += p
+        if person in have_trait:
+            probabilities[person]['trait'][True] += p
+        else:
+            probabilities[person]['trait'][False] += p
 
 
 def normalize(probabilities):
@@ -304,7 +326,15 @@ def normalize(probabilities):
     Update `probabilities` such that each probability distribution
     is normalized (i.e., sums to 1, with relative proportions the same).
     """
-    raise NotImplementedError
+    for person in probabilities:
+
+        s = probabilities[person]['gene'][0]+probabilities[person]['gene'][1]+probabilities[person]['gene'][2]
+        for i in range(3):
+            probabilities[person]['gene'][i] /= s
+
+        s = probabilities[person]['trait'][False] + probabilities[person]['trait'][True]
+        probabilities[person]['trait'][False] /= s
+        probabilities[person]['trait'][True] /= s
 
 
 if __name__ == "__main__":
