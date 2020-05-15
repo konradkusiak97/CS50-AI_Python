@@ -1,6 +1,7 @@
 import sys
 
 from crossword import *
+from collections import deque
 
 
 class CrosswordCreator():
@@ -133,14 +134,30 @@ class CrosswordCreator():
         Return True if arc consistency is enforced and no domains are empty;
         return False if one or more domains end up empty.
         """
-        raise NotImplementedError
+        if arcs == None:
+            queue = deque()
+            for v in self.crossword.variables:
+                for vArc in self.crossword.neighbors(v):
+                    queue.append((v, vArc))
+        else:
+            queue = deque(arcs)
+        while len(queue) != 0:
+            arc = queue.popleft()
+            if revise(arc[0], arc[1]):
+                if len(self.domains[arc[0]]) == 0:
+                    return False
+                for v in (self.crossword.neighbors(arc[0]) - arc[1]):
+                    queue.append((v, arc[0]))
+        return True
+
+        
 
     def assignment_complete(self, assignment):
         """
         Return True if `assignment` is complete (i.e., assigns a value to each
         crossword variable); return False otherwise.
         """
-        raise NotImplementedError
+        
 
     def consistent(self, assignment):
         """
