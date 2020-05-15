@@ -134,6 +134,7 @@ class CrosswordCreator():
         Return True if arc consistency is enforced and no domains are empty;
         return False if one or more domains end up empty.
         """
+        # Initilizing the queue
         if arcs == None:
             queue = deque()
             for v in self.crossword.variables:
@@ -141,6 +142,8 @@ class CrosswordCreator():
                     queue.append((v, vArc))
         else:
             queue = deque(arcs)
+
+        # revising each variable form queue
         while len(queue) != 0:
             arc = queue.popleft()
             if revise(arc[0], arc[1]):
@@ -149,8 +152,6 @@ class CrosswordCreator():
                 for v in (self.crossword.neighbors(arc[0]) - arc[1]):
                     queue.append((v, arc[0]))
         return True
-
-        
 
     def assignment_complete(self, assignment):
         """
@@ -169,6 +170,31 @@ class CrosswordCreator():
         Return True if `assignment` is consistent (i.e., words fit in crossword
         puzzle without conflicting characters); return False otherwise.
         """
+        if not self.assignment_complete(assignment):
+            return False
+
+        # Check for repetitions in values 
+        l = 0
+        checkingSet = set()
+        for var in assignment:
+            checkingSet.add(assignment[var])
+            l += 1
+        if l != len(checkingSet):
+            return False
+
+        # Check if length of value is correct
+        for var in assignment:
+            if var.length != len(assignment[var]):
+                return False
+        
+        # Check for conflicts between neighbors
+        for var in assignment:
+            neighbors = self.crossword.neighbors(var)
+            for n in neighbors:
+                pair = self.crossword.overlaps[var, n]
+                if assignment[var][pair[0]] != assignment[n][pair[1]]:
+                    return False
+        return True
         
     def order_domain_values(self, var, assignment):
         """
