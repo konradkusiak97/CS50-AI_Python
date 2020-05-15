@@ -195,15 +195,31 @@ class CrosswordCreator():
                 if assignment[var][pair[0]] != assignment[n][pair[1]]:
                     return False
         return True
-        
+
     def order_domain_values(self, var, assignment):
         """
         Return a list of values in the domain of `var`, in order by
         the number of values they rule out for neighboring variables.
         The first value in the list, for example, should be the one
         that rules out the fewest values among the neighbors of `var`.
-        """
-        raise NotImplementedError
+        """ 
+        neighbors = self.crossword.neighbors(var)
+        hashMap = dict()
+        sortedValues = []
+        for value in self.domains[var]:
+            count = 0
+            for n in neighbors:
+                if n not in assignment:
+                    indx = self.crossword.overlaps[var, n]
+                    for nval in self.domains[n]:
+                        if nval[indx[1]] != value[indx[0]]:
+                            count += 1
+            hashMap[value] = count
+            sortedValues.append(value)
+        sortedValues.sort(key=hashMap.get)
+        return sortedValues
+        
+
 
     def select_unassigned_variable(self, assignment):
         """
