@@ -219,8 +219,6 @@ class CrosswordCreator():
         sortedValues.sort(key=hashMap.get)
         return sortedValues
         
-
-
     def select_unassigned_variable(self, assignment):
         """
         Return an unassigned variable not already part of `assignment`.
@@ -229,7 +227,28 @@ class CrosswordCreator():
         degree. If there is a tie, any of the tied variables are acceptable
         return values.
         """
-        raise NotImplementedError
+        unassignedVars = set(self.domains.keys()) - set(assignment.keys())
+        hashMap = dict()
+        hashMapAdd = dict()
+        sortedVars = []
+        for var in unassignedVars:
+            hashMap[var] = len(self.domains[var])
+            hashMapAdd[var] = len(self.crossword.neighbors(var))
+            sortedVars.append(var)
+
+        sortedVars.sort(key=hashMap.get)
+        equalNum = []
+        for i in range(len(sortedVars)):
+            if len(self.domains[sortedVars[i]]) == len(self.domains[sortedVars[i+1]]):
+                equalNum.append(sortedVars[i])
+                equalNum.append(sortedVars[i+1])
+            else:
+                break
+        if len(equalNum) == 0:
+            return sortedVars[0]
+            
+        equalNum.sort(key=hashMapAdd.get,reverse=True)
+        return equalNum[0]
 
     def backtrack(self, assignment):
         """
