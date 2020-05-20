@@ -196,8 +196,9 @@ class CrosswordCreator():
             neighbors = self.crossword.neighbors(var)
             for n in neighbors:
                 pair = self.crossword.overlaps[var, n]
-                if assignment[var][pair[0]] != assignment[n][pair[1]]:
-                    return False
+                if n in assignment:
+                    if assignment[var][pair[0]] != assignment[n][pair[1]]:
+                        return False
         return True
 
     def order_domain_values(self, var, assignment):
@@ -242,7 +243,7 @@ class CrosswordCreator():
 
         sortedVars.sort(key=hashMap.get)
         equalNum = []
-        for i in range(len(sortedVars)):
+        for i in range(len(sortedVars)-1):
             if len(self.domains[sortedVars[i]]) == len(self.domains[sortedVars[i+1]]):
                 equalNum.append(sortedVars[i])
                 equalNum.append(sortedVars[i+1])
@@ -269,7 +270,7 @@ class CrosswordCreator():
         for value in self.order_domain_values(var, assignment):
             assignment[var] = value
             if self.consistent(assignment):
-                result = backtrack(assignment)
+                result = self.backtrack(assignment)
                 if result != None:
                     return result
                 del assignment[var]
@@ -279,13 +280,13 @@ class CrosswordCreator():
 def main():
 
     # Check usage
-    '''if len(sys.argv) not in [3, 4]:
-        sys.exit("Usage: python generate.py structure words [output]")'''
+    if len(sys.argv) not in [3, 4]:
+        sys.exit("Usage: python generate.py structure words [output]")
 
     # Parse command-line arguments
-    structure = 'data/structure1.txt' #sys.argv[1]
-    words =  'data/words1.txt' #sys.argv[2]
-    output = 'output.png'# sys.argv[3] if len(sys.argv) == 4 else None
+    structure = sys.argv[1]
+    words =  sys.argv[2]
+    output = sys.argv[3] if len(sys.argv) == 4 else None
 
     # Generate crossword
     crossword = Crossword(structure, words)
