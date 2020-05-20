@@ -2,6 +2,7 @@ import sys
 
 from crossword import *
 from collections import deque
+import copy
 
 
 class CrosswordCreator():
@@ -100,8 +101,9 @@ class CrosswordCreator():
         (Remove any values that are inconsistent with a variable's unary
          constraints; in this case, the length of the word.)
         """
-        for var in self.domains:
-            for word in self.domains[var]:
+        newDomains = copy.deepcopy(self.domains)
+        for var in newDomains:
+            for word in newDomains[var]:
                 if len(word) != var.length:
                     self.domains[var].remove(word)
 
@@ -114,15 +116,19 @@ class CrosswordCreator():
         Return True if a revision was made to the domain of `x`; return
         False if no revision was made.
         """
+        foundMatch = False
         overlap = self.crossword.overlaps[x, y]
         if overlap == None:
             return False
         result = False
-        for x_word in self.domains[x]:
-            for y_word in self.domains[y]:
-                if y_word[overlap[1]] != x_word[overlap[0]]:
-                    self.domains[x].remove(x_word)
-                    result = True
+        newDomains = copy.deepcopy(self.domains)
+        for x_word in newDomains[x]:
+            for y_word in newDomains[y]:
+                if y_word[overlap[1]] == x_word[overlap[0]]:
+                    foundMatch = True
+            if not foundMatch:
+                self.domains[x].remove(x_word)
+                result = True
         return result
 
     def ac3(self, arcs=None):
@@ -146,10 +152,10 @@ class CrosswordCreator():
         # revising each variable form queue
         while len(queue) != 0:
             arc = queue.popleft()
-            if revise(arc[0], arc[1]):
+            if self.revise(arc[0], arc[1]):
                 if len(self.domains[arc[0]]) == 0:
                     return False
-                for v in (self.crossword.neighbors(arc[0]) - arc[1]):
+                for v in self.crossword.neighbors(arc[0]) - {arc[1]}:
                     queue.append((v, arc[0]))
         return True
 
@@ -170,8 +176,6 @@ class CrosswordCreator():
         Return True if `assignment` is consistent (i.e., words fit in crossword
         puzzle without conflicting characters); return False otherwise.
         """
-        if not self.assignment_complete(assignment):
-            return False
 
         # Check for repetitions in values 
         l = 0
@@ -246,7 +250,7 @@ class CrosswordCreator():
                 break
         if len(equalNum) == 0:
             return sortedVars[0]
-            
+
         equalNum.sort(key=hashMapAdd.get,reverse=True)
         return equalNum[0]
 
@@ -259,19 +263,29 @@ class CrosswordCreator():
 
         If no assignment is possible, return None.
         """
-        raise NotImplementedError
-
+        if self.assignment_complete(assignment):
+            return assignment
+        var = self.select_unassigned_variable(assignment)
+        for value in self.order_domain_values(var, assignment):
+            assignment[var] = value
+            if self.consistent(assignment):
+                result = backtrack(assignment)
+                if result != None:
+                    return result
+                del assignment[var]
+            else:
+                del assignment[var]
 
 def main():
 
     # Check usage
-    if len(sys.argv) not in [3, 4]:
-        sys.exit("Usage: python generate.py structure words [output]")
+    '''if len(sys.argv) not in [3, 4]:
+        sys.exit("Usage: python generate.py structure words [output]")'''
 
     # Parse command-line arguments
-    structure = sys.argv[1]
-    words = sys.argv[2]
-    output = sys.argv[3] if len(sys.argv) == 4 else None
+    structure = 'data/structure1.txt' #sys.argv[1]
+    words =  'data/words1.txt' #sys.argv[2]
+    output = 'output.png'# sys.argv[3] if len(sys.argv) == 4 else None
 
     # Generate crossword
     crossword = Crossword(structure, words)
