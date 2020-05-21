@@ -275,30 +275,30 @@ class CrosswordCreator():
                     arcs.add((n, var))
                 inference = self.ac3(arcs)
                 if inference:
-                    inf = set()
+                    infr = set()
                     for v in self.domains:
                         if len(self.domains[v]) == 1:
-                            assignment[v] = self.domains[v]
-                            inf.add(v)
+                            assignment[v] = self.domains[v].pop()
+                            infr.add(v)
                 result = self.backtrack(assignment)
                 if result != None:
                     return result
                 del assignment[var]
-                for v in inf:
+                for v in infr:
                     del assignment[v]
             else:
                 del assignment[var]
 
 def main():
 
-    # Check usage
+    '''# Check usage
     if len(sys.argv) not in [3, 4]:
-        sys.exit("Usage: python generate.py structure words [output]")
+        sys.exit("Usage: python generate.py structure words [output]")'''
 
     # Parse command-line arguments
-    structure = sys.argv[1]
-    words =  sys.argv[2]
-    output = sys.argv[3] if len(sys.argv) == 4 else None
+    structure = 'data/structure2.txt'#sys.argv[1]
+    words =  'data/words0.txt'#sys.argv[2]
+    output = 'output.png'#sys.argv[3] if len(sys.argv) == 4 else None
 
     # Generate crossword
     crossword = Crossword(structure, words)
