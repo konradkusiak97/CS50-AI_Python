@@ -270,10 +270,22 @@ class CrosswordCreator():
         for value in self.order_domain_values(var, assignment):
             assignment[var] = value
             if self.consistent(assignment):
+                arcs = set()
+                for n in self.crossword.neighbors(var):
+                    arcs.add((n, var))
+                inference = self.ac3(arcs)
+                if inference:
+                    inf = set()
+                    for v in self.domains:
+                        if len(self.domains[v]) == 1:
+                            assignment[v] = self.domains[v]
+                            inf.add(v)
                 result = self.backtrack(assignment)
                 if result != None:
                     return result
                 del assignment[var]
+                for v in inf:
+                    del assignment[v]
             else:
                 del assignment[var]
 
