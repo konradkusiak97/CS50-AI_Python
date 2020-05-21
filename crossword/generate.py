@@ -273,8 +273,11 @@ class CrosswordCreator():
                 arcs = set()
                 for n in self.crossword.neighbors(var):
                     arcs.add((n, var))
+                currentDomain = copy.deepcopy(self.domains)
                 inference = self.ac3(arcs)
-                if inference:
+                if not inference:
+                    self.domains = currentDomain
+                else:
                     infr = set()
                     for v in self.domains:
                         if len(self.domains[v]) == 1:
