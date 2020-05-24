@@ -101,9 +101,8 @@ class NimAI():
         Return the Q-value for the state `state` and the action `action`.
         If no Q-value exists yet in `self.q`, return 0.
         """
-        tupleState = tuple(state)
-        if (tupleState, action) in self.q:
-            return self.q[(tupleState, action)]
+        if (tuple(state), action) in self.q:
+            return self.q[(tuple(state), action)]
         return 0
 
     def update_q_value(self, state, action, old_q, reward, future_rewards):
@@ -134,7 +133,18 @@ class NimAI():
         Q-value in `self.q`. If there are no available actions in
         `state`, return 0.
         """
-        
+        bestReward = 0
+        actions = Nim.available_actions(state)
+        if len(actions) == 0:
+            return 0
+        for a in actions:
+            if (tuple(state), a) in self.q:
+                potentialQ = self.q[(tuple(state), a)]
+            else:
+                potentialQ = 0
+            if potentialQ >= bestReward:
+                bestReward = potentialQ
+        return bestReward
 
     def choose_action(self, state, epsilon=True):
         """
@@ -151,8 +161,37 @@ class NimAI():
         If multiple actions have the same Q-value, any of those
         options is an acceptable return value.
         """
-        raise NotImplementedError
+        if not epsilon:
+            actions = Nim.available_actions(state)
+            bestAction = 0
+            currentQ = 0
+            for a in actions:
+                if (tuple(state), a) in self.q:
+                    if self.q[(tuple(state), a)] >= currentQ:
+                        bestAction = a
+            if bestAction == 0:
+                bestAction = random.choice(list(actions))
+            return bestAction
 
+        # if epsilon is True
+        population = [True, False]
+        weights = [self.epsilon, 1-self.epsilon]
+        if random.choices(population, weights)[0]:
+            # choosing randomly
+            actions = Nim.available_actions(state)
+            choice = random.choice(list(actions))
+            return choice
+        else:
+            actions = Nim.available_actions(state)
+            bestAction = 0
+            currentQ = 0
+            for a in actions:
+                if (tuple(state), a) in self.q:
+                    if self.q[(tuple(state), a)] >= currentQ:
+                        bestAction = a
+            if bestAction == 0:
+                bestAction = random.choice(list(actions))
+            return bestAction
 
 def train(n):
     """
