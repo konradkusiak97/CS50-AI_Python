@@ -135,15 +135,9 @@ class NimAI():
         """
         bestReward = 0
         actions = Nim.available_actions(state)
-        if len(actions) == 0:
-            return 0
         for a in actions:
-            if (tuple(state), a) in self.q:
-                potentialQ = self.q[(tuple(state), a)]
-            else:
-                potentialQ = 0
-            if potentialQ >= bestReward:
-                bestReward = potentialQ
+            if self.get_q_value(state, a) >= bestReward:
+                bestReward = self.get_q_value(state, a)
         return bestReward
 
     def choose_action(self, state, epsilon=True):
@@ -166,9 +160,9 @@ class NimAI():
             bestAction = 0
             currentQ = 0
             for a in actions:
-                if (tuple(state), a) in self.q:
-                    if self.q[(tuple(state), a)] >= currentQ:
-                        bestAction = a
+                if self.get_q_value(state, a) >= currentQ:
+                    currentQ = self.get_q_value(state, a)
+                    bestAction = a
             if bestAction == 0:
                 bestAction = random.choice(list(actions))
             return bestAction
@@ -186,9 +180,9 @@ class NimAI():
             bestAction = 0
             currentQ = 0
             for a in actions:
-                if (tuple(state), a) in self.q:
-                    if self.q[(tuple(state), a)] >= currentQ:
-                        bestAction = a
+                if self.get_q_value(state, a) >= currentQ:
+                    currentQ = self.get_q_value(state, a)
+                    bestAction = a
             if bestAction == 0:
                 bestAction = random.choice(list(actions))
             return bestAction
