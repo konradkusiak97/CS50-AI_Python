@@ -101,9 +101,41 @@ WEEK 3 ~ OPTIMIZATION
 
 Tasks: "Crossword"
 
+    1. Crossword
+
+    Video Link: https://youtu.be/3JEeBEHPODI
+
+    The task involved creating an AI that will solve a crossword puzzle, given some words dataset. 
+
+    This problem can be described as a constrain satisfaction problem, where the nodes in the graph are represented by each empty field in the crossword. Such a node contains two information:
+        - number of empty cells
+        - direction 
+    the AI, will take those information into consideration in order to choose the proper words for the slot. 
+
+    AI will as well choose the words, based on the fact which they collide with each other or not. Therefore, each node, will contain as well a domain which is a set of words that fit into the slot and have corresponding word that fits with them in the colliding nodes. In order to find those words, I implemented AC3 Algorithm together with enforce_node_consistency function which takes care about previous constrains (directoin and length). The order domain_domain_values function orders the domain according to the least-constraining values heuristic. And the select_unassigned_variable function picks not yet assigned node according to the minimum remaining value heuristic and then the degree heuristic.
+
+    Lastly, the whole AI operates in the backtracking function which is an algorithm that makes sure the AI will recursively try fitting all the nodes and will backtrack if there is some incorrect result. 
+
+    Full description at: https://cs50.harvard.edu/ai/2020/projects/3/crossword/
+
 WEEK 4 ~ LEARNING
 
 Tasks: "Shopping", "Nim"
+    
+    1. Shopping
+
+    Video Link: https://youtu.be/o2D3_es346s
+
+    This AI predicts whether online shopping customers will complete a purchase. 
+    Given some data (in the prgram, I was provided with data of some shopping website from about 12000 users), the program splits it into two sets, one for training and the other for checking the model. 
+
+    With the help of scikit-learn library in Python, I created a K-Neighbours classifier model and trained it. In this model, depending on a number K, it considers K-number of closest neighbours of each data point and chooses the most common class among them. 
+
+    Full description at: https://cs50.harvard.edu/ai/2020/projects/4/shopping/
+
+    2. Nim
+
+    
 
 WEEK 5 ~ NEURAL NETWORKS
 
