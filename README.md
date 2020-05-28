@@ -38,7 +38,33 @@ Tasks: "Knigths", "Minesweeper"
 
     1. Knights
 
+    Short video with functionality of the program: https://youtu.be/BeXnsyBBVoo
+
+    This task was based on a book published by Raymond Smullyan in 1978 called "What is the name of this book". It's a book of logical puzzles and one of them is called "Knights and Knaves". 
+
+    Considering the contrains of the puzzle which assume that Knights always tell the truth and Knaves always lie, I wrote a program that finds out who is a kinght and who is knave based on what the people said. 
+
+    The task involved manipulating with built structures in Python such as Implication, Or and And operators. 
+
+    The 'intelligent' part of the program was based on the idea of inferences. That the program, given a couple of initial constrains and facts, can infere some new assumptions from them.
+
+    Full description can be found at: https://cs50.harvard.edu/ai/2020/projects/1/knights/
+
     2. Minesweeper
+
+    Video with functionality: https://youtu.be/f4u2wQyHCYU
+
+    This task was to implement a well-known game "Minesweeper" in a way that the computer will play it. 
+
+    This is another example of idea of working with inferences. Computer, given some initial variables, will infer which fields are safe and he will choose them next. 
+
+    Some of the ways how to infere new assumptions are following:
+        - if we have a cell with number 0, we can infere that there is no bomb in any surrounding cell,
+        - if the number of surrounding cells that are not safe is equal to the number on the cell it means that all the cells have a bomb.
+
+    Based on logical assumptions like those, AI can recursively try infere new information about the board. 
+
+    Full description can be found at: https://cs50.harvard.edu/ai/2020/projects/1/minesweeper/
 
 WEEK 2
 
@@ -46,4 +72,14 @@ Tasks: "PageRank", "Heredity"
 
     1. PageRank
 
+    This week's tasks are based on the idea of AI which needs to make unsure decisions. The way how to work with those situations is taking into account theory of Probability.
+
+    In the PageRank task, I wrote a program which ranks web-pages by importance. The algorithms I used were Random Surfer model, where a random user is considered who clicks on the links at random. Therefore, the more links to a certain page, the higher probability the surfer will end up there. 
+
+    Since this algorithm is not functioning well if all the webpages are not connected (are not forming one graph but more), I used as well the Iterative algorithm. 
+
+    Full description at: https://cs50.harvard.edu/ai/2020/projects/2/pagerank/
+
     2. Heredity
+
+    
