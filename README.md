@@ -6,7 +6,7 @@ This the coursework from an online course I pursued through edx platform of the 
 
 I will be gradually updating this readme file with descriptions of each weekly assignment.
 
-WEEK 0
+WEEK 0 ~ SEARCH
 
 Tasks: "Degrees", "Tic-Tac-Toe"
     
@@ -32,7 +32,7 @@ Tasks: "Degrees", "Tic-Tac-Toe"
 
     Full description of the task can be found at: https://cs50.harvard.edu/ai/projects/0/tictactoe/
     
-WEEK 1
+WEEK 1 ~ KNOWLEDGE
 
 Tasks: "Knigths", "Minesweeper"
 
@@ -66,11 +66,13 @@ Tasks: "Knigths", "Minesweeper"
 
     Full description can be found at: https://cs50.harvard.edu/ai/2020/projects/1/minesweeper/
 
-WEEK 2
+WEEK 2 ~ UNCERTAINTY
 
 Tasks: "PageRank", "Heredity"
 
     1. PageRank
+
+    Video Link: https://youtu.be/oCqDr5F4kI8
 
     This week's tasks are based on the idea of AI which needs to make unsure decisions. The way how to work with those situations is taking into account theory of Probability.
 
@@ -82,4 +84,32 @@ Tasks: "PageRank", "Heredity"
 
     2. Heredity
 
-    
+    Video Link: https://youtu.be/cBHMXESVGS0
+
+    This program asses probability that certain person will have particular genetic trait.
+
+    Given certain data about particular people such as:
+     - mother's data,
+     - father's data
+     - boolean value of trait (if the person has it or not)
+
+    Taking into consideration certain constrains about inheriting the bad gene, the program calculates the probability that the people in the data have the gene. 
+
+    Full description at: https://cs50.harvard.edu/ai/2020/projects/2/heredity/
+
+WEEK 3 ~ OPTIMIZATION
+
+Tasks: "Crossword"
+
+WEEK 4 ~ LEARNING
+
+Tasks: "Shopping", "Nim"
+
+WEEK 5 ~ NEURAL NETWORKS
+
+Tasks: "Traffic"
+
+WEEK 6 ~ LANGUAGE
+
+Tasks: "Parser", "Questions"
+
