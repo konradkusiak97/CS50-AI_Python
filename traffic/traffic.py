@@ -91,16 +91,18 @@ def get_model():
         tf.keras.layers.Conv2D(
             100, (3, 3), activation="relu", input_shape=(IMG_WIDTH, IMG_HEIGHT, 3)
         ),
+        tf.keras.layers.Conv2D(
+            100, (3, 3), activation="relu", input_shape=(IMG_WIDTH, IMG_HEIGHT, 3)
+        ),
 
         # Max-pooling layer, using 2x2 pool size
-        tf.keras.layers.MaxPooling2D(pool_size=(3, 3)),
+        tf.keras.layers.MaxPooling2D(pool_size=(4, 4)),
 
         # Flatten units
         tf.keras.layers.Flatten(),
 
         # Add a hidden layer with dropout
         tf.keras.layers.Dense(300, activation="relu"),
-
         tf.keras.layers.Dropout(0.5),
 
         # Add an output layer with output units for all 10 digits
