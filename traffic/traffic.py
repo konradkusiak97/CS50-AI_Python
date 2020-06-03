@@ -87,25 +87,24 @@ def get_model():
     # Create a convolutional neural network
     model = tf.keras.models.Sequential([
 
-        # Convolutional layer. Learn 32 filters using a 3x3 kernel
+        # Convolutional layer. Learn 100 filters using a 3x3 kernel twice
         tf.keras.layers.Conv2D(
-            100, (3, 3), activation="relu", input_shape=(IMG_WIDTH, IMG_HEIGHT, 3)
+            130, (3, 3), activation="relu", input_shape=(IMG_WIDTH, IMG_HEIGHT, 3)
         ),
-        tf.keras.layers.Conv2D(
-            100, (3, 3), activation="relu", input_shape=(IMG_WIDTH, IMG_HEIGHT, 3)
-        ),
+    
 
-        # Max-pooling layer, using 2x2 pool size
+        # Max-pooling layer, using 4x4 pool size
         tf.keras.layers.MaxPooling2D(pool_size=(4, 4)),
 
         # Flatten units
         tf.keras.layers.Flatten(),
 
         # Add a hidden layer with dropout
+        tf.keras.layers.Dense(350, activation="relu"),
         tf.keras.layers.Dense(300, activation="relu"),
         tf.keras.layers.Dropout(0.5),
 
-        # Add an output layer with output units for all 10 digits
+        # Add an output layer with output units
         tf.keras.layers.Dense(NUM_CATEGORIES, activation="softmax")
     ])
 
