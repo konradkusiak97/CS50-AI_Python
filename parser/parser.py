@@ -15,11 +15,11 @@ V -> "smiled" | "tell" | "were"
 """
 
 NONTERMINALS = """
-S -> NP VP | S Conj S | S P S
-NP -> N | Det N  
-N -> N | N Conj NP | Adj N | N PP
-PP -> P NP
-VP -> V | V NP | Adv V NP | V Adv | V PP | V PP Adv | V NP PP | VP Conj VP
+S -> N VP | S Conj S | S P S
+NP -> Det N  
+N -> NP | Adj N | N PP
+PP -> P N
+VP -> V | V N | Adv V N | V Adv | V PP | V PP Adv | V N PP | VP Conj VP
 """
 
 
@@ -69,7 +69,8 @@ def preprocess(sentence):
     """
     nltk.download('punkt')
     s = nltk.word_tokenize(sentence)
-    for word in s:
+    for i, word in enumerate(s):
+        s[i] = word.lower()
         nonChar = False
         for c in word:
             if c.isalpha():
@@ -86,7 +87,7 @@ def np_chunk(tree):
     whose label is "NP" that does not itself contain any other
     noun phrases as subtrees.
     """
-    
+    return [] 
 
 
 if __name__ == "__main__":
