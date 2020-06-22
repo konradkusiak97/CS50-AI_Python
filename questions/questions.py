@@ -3,6 +3,7 @@ import sys
 import os
 import string
 import copy
+import numpy as np
 
 FILE_MATCHES = 1
 SENTENCE_MATCHES = 1
@@ -89,8 +90,19 @@ def compute_idfs(documents):
     Any word that appears in at least one of the documents should be in the
     resulting dictionary.
     """
-    raise NotImplementedError
-
+    dictLen = len(documents)
+    words_idf = {}
+    for name in documents:
+        words = documents[name]
+        for w in words:
+            if w in words_idf:
+                continue
+            wFreqncy = 0
+            for n in documents:
+                if w in documents[n]:
+                    wFreqncy += 1
+            words_idf[w] = np.log(dictLen/wFreqncy)
+    return words_idf
 
 def top_files(query, files, idfs, n):
     """
@@ -99,8 +111,8 @@ def top_files(query, files, idfs, n):
     to their IDF values), return a list of the filenames of the the `n` top
     files that match the query, ranked according to tf-idf.
     """
-    raise NotImplementedError
-
+    for f in files:
+        tf_idf
 
 def top_sentences(query, sentences, idfs, n):
     """
