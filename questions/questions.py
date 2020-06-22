@@ -117,7 +117,8 @@ def top_files(query, files, idfs, n):
         for word in query:
             currentSum += files[f].count(word) * idfs[word]
         ranking[f] = currentSum
-    return sorted(ranking.keys(), key=lambda x: ranking[x], reverse=True)
+    sortedRank = sorted(ranking.keys(), key=lambda x: ranking[x], reverse=True)
+    return sortedRank[:n]
     
 
 def top_sentences(query, sentences, idfs, n):
@@ -128,7 +129,36 @@ def top_sentences(query, sentences, idfs, n):
     the query, ranked according to idf. If there are ties, preference should
     be given to sentences that have a higher query term density.
     """
-    raise NotImplementedError
+    ranking = {}
+    qtm = {}
+
+    for s in sentences:
+        value = 0
+        # Calculate qtm for each sentence
+        for w in sentences[s]:
+            if w in query:
+                value += 1
+        qtm[s] = value/len(sentences[s])
+        # calculate sum of idfs for each sentence
+        value = 0
+        for word in query:
+            if word in sentences[s]:
+                value += idfs[word]
+        ranking[s] = value
+    # sort the ranking according to the values
+    sortedRank = sorted(ranking.items(), key=lambda x: x[1], reverse=True)
+    for i, s in enumerate(sortedRank):
+        if i == len(sortedRank)-1:
+            break
+        if s[1] == sortedRank[i+1][1]:
+            if qtm[s[0]] < qtm[sortedRank[i+1][0]]:
+                sortedRank[i], sortedRank[i+1] = sortedRank[i+1], sortedRank[i]
+    finalRank = []
+    for j,s in enumerate(sortedRank):
+        if j == n:
+            break
+        finalRank.append(s[0])
+    return finalRank
 
 
 if __name__ == "__main__":
