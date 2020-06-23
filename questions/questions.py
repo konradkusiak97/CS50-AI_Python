@@ -12,11 +12,11 @@ SENTENCE_MATCHES = 1
 def main():
 
     # Check command-line arguments
-    if len(sys.argv) != 2:
-        sys.exit("Usage: python questions.py corpus")
+    #if len(sys.argv) != 2:
+      #  sys.exit("Usage: python questions.py corpus")
 
     # Calculate IDF values across files
-    files = load_files(sys.argv[1])
+    files = load_files('corpus')#sys.argv[1])
     file_words = {
         filename: tokenize(files[filename])
         for filename in files
@@ -72,7 +72,7 @@ def tokenize(document):
     """
     nltk.download('punkt')
     nltk.download('stopwords')
-    wordList = nltk.word_tokenize(document)
+    wordList = nltk.word_tokenize(document.lower())
     punctuation = string.punctuation
     stopWords = nltk.corpus.stopwords.words("english")
     listCopy = copy.deepcopy(wordList)
@@ -120,7 +120,6 @@ def top_files(query, files, idfs, n):
     sortedRank = sorted(ranking.keys(), key=lambda x: ranking[x], reverse=True)
     return sortedRank[:n]
     
-
 def top_sentences(query, sentences, idfs, n):
     """
     Given a `query` (a set of words), `sentences` (a dictionary mapping
@@ -130,7 +129,7 @@ def top_sentences(query, sentences, idfs, n):
     be given to sentences that have a higher query term density.
     """
     ranking = {}
-    qtm = {}
+    qtd = {}
 
     for s in sentences:
         value = 0
@@ -138,7 +137,7 @@ def top_sentences(query, sentences, idfs, n):
         for w in sentences[s]:
             if w in query:
                 value += 1
-        qtm[s] = value/len(sentences[s])
+        qtd[s] = value/len(sentences[s])
         # calculate sum of idfs for each sentence
         value = 0
         for word in query:
@@ -147,12 +146,18 @@ def top_sentences(query, sentences, idfs, n):
         ranking[s] = value
     # sort the ranking according to the values
     sortedRank = sorted(ranking.items(), key=lambda x: x[1], reverse=True)
-    for i, s in enumerate(sortedRank):
-        if i == len(sortedRank)-1:
-            break
-        if s[1] == sortedRank[i+1][1]:
-            if qtm[s[0]] < qtm[sortedRank[i+1][0]]:
-                sortedRank[i], sortedRank[i+1] = sortedRank[i+1], sortedRank[i]
+    # if they have same idfs, sort according to qtd
+    change = True
+    while change:
+        change = False
+        for i, s in enumerate(sortedRank):
+            if i == len(sortedRank)-1:
+                break
+            if s[1] == sortedRank[i+1][1]:
+                if qtd[s[0]] < qtd[sortedRank[i+1][0]]:
+                    sortedRank[i], sortedRank[i+1] = sortedRank[i+1], sortedRank[i]
+                    change = True
+                    break
     finalRank = []
     for j,s in enumerate(sortedRank):
         if j == n:
