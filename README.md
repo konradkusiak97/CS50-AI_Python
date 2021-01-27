@@ -1,22 +1,29 @@
 # CS50’s Introduction to Artificial Intelligence with Python
 
 
- Below, I listed all my weekly projects from an online course I pursued through the Edx platform of the above title. The course focuses on an introduction to AI concepts such as Machine Learning and Neural Networks. 
+ Below, I listed all my weekly projects from an online course I pursued through the __Edx__ platform of the above title. The course focuses on an introduction to AI concepts such as _Machine Learning_ and _Neural Networks_. 
  
  Each project has a separate folder with all its code, description, and a link to a video in which I present how my program runs. 
  
  The more detialed description and further information is on the website of the [course](https://cs50.harvard.edu/ai/).
 
 ## Weekly projects outline
-Week0: Degrees, Tic-Tac-Toe (Topic: 'Search')
-Week1: Knights, Minesweeper (Topic: 'Knowledge')
-Week2: Pagerank, Heredity (Topic: 'Uncertainty')
-Week3: Crossword (Topic: Optimization)
-Week4: Shopping, Nim (Topic: Learning)
-Week5: Traffic (Topic: Neural Networks)
-Week6: Parser, Questions (Topic: Language)
+### Week0 Search
+ _Degrees_ _Tic-Tac-Toe_ 
+### Week1: 
+ Knights, Minesweeper (Topic: 'Knowledge')
+### Week2: 
+ Pagerank, Heredity (Topic: 'Uncertainty')
+### Week3: 
+ Crossword (Topic: Optimization)
+### Week4: 
+ Shopping, Nim (Topic: Learning)
+### Week5: 
+ Traffic (Topic: Neural Networks)
+### Week6: 
+ Parser, Questions (Topic: Language)
 
-I successfully completed the course and obtained the certificate below.
+I successfully completed the course and obtained the certificate.
 
    ![](IMG/CS50AI.png) 
 
