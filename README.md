@@ -9,7 +9,7 @@
 
 ## Weekly projects outline
 ### Week0 "Search"
- _Degrees_, _Tic-Tac-Toe_ 
+ [_Degrees_](https://github.com/konradkusiak97/CS50-AI_Python/tree/master/degrees), _Tic-Tac-Toe_ 
 ### Week1 "Knowledge" 
  _Knights_, _Minesweeper_ 
 ### Week2 "Uncertainty"
