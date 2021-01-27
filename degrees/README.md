@@ -1,6 +1,6 @@
 # Degrees
 
- ![](../IMG/degrees.png)
+ [![](../IMG/degrees.png)](https://cs50.harvard.edu/ai/projects/0/degrees/)
  
  The task involved using Breadth-Search First (BFS) algorithm in order to find the corresponding path from one actor to another according to theory of Six Degrees of Kevin Bacon. 
 
