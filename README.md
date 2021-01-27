@@ -8,20 +8,20 @@
  The more detialed description and further information is on the website of the [course](https://cs50.harvard.edu/ai/).
 
 ## Weekly projects outline
-### Week0 Search
- _Degrees_ _Tic-Tac-Toe_ 
-### Week1: 
- Knights, Minesweeper (Topic: 'Knowledge')
-### Week2: 
- Pagerank, Heredity (Topic: 'Uncertainty')
-### Week3: 
- Crossword (Topic: Optimization)
-### Week4: 
- Shopping, Nim (Topic: Learning)
-### Week5: 
- Traffic (Topic: Neural Networks)
-### Week6: 
- Parser, Questions (Topic: Language)
+### Week0 "Search"
+ _Degrees_, _Tic-Tac-Toe_ 
+### Week1 "Knowledge" 
+ _Knights_, _Minesweeper_ 
+### Week2 "Uncertainty"
+ _Pagerank_, _Heredity_ 
+### Week3 "Optimization"
+ _Crossword_ 
+### Week4 "Learning"
+ _Shopping_, _Nim_ 
+### Week5 "Neural Networks"
+ _Traffic_ 
+### Week6 "Language" 
+ _Parser_, _Questions_
 
 I successfully completed the course and obtained the certificate.
 
