@@ -5,11 +5,11 @@
 
  Below are the descriptions of each weekly project together with a link to a short youtube video where you can see how the program works.
 
-## Week 0 title: Search
+## Week 0: "Search"
 
-Tasks: "Degrees", "Tic-Tac-Toe"
+### Tasks: "Degrees", "Tic-Tac-Toe"
     
-    1. Degrees
+####    1. Degrees
 
     I uploaded a short video that presents the functionality of the program at: https://youtu.be/WwaMH1LRgZQ
     
