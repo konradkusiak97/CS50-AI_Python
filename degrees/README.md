@@ -1,6 +1,6 @@
 # Degrees
 
- ![](./IMG/degrees.png)
+ ![](../IMG/degrees.png)
  
  The task involved using Breadth-Search First (BFS) algorithm in order to find the corresponding path from one actor to another according to theory of Six Degrees of Kevin Bacon. 
 
