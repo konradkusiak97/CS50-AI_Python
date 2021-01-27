@@ -1,8 +1,7 @@
-CS50’s
-Introduction to Artificial Intelligence with Python
+# CS50’s Introduction to Artificial Intelligence with Python
 
 
-This the coursework from an online course I pursued through edx platform of the above title. The course focuses on introduction to AI concepts such as Machine Learning and Neural Networks. I will be posting here my progress throughout the course. The more detialed description and further information is on the website of the course: https://cs50.harvard.edu/ai/.
+ This is the coursework from an online course I pursued through edx platform of the above title. The course focuses on introduction to AI concepts such as Machine Learning and Neural Networks. I will be posting here my progress throughout the course. The more detialed description and further information is on the website of the course: https://cs50.harvard.edu/ai/.
 
 I will be gradually updating this readme file with descriptions of each weekly assignment.
 
@@ -149,6 +148,20 @@ WEEK 5 ~ NEURAL NETWORKS
 
 Tasks: "Traffic"
 
+    1. Traffic
+
+    Video Link: 
+
+    In this task, I was supposed to create a convolutional neural network that would be able to identify traffic signs that appear on a photograph.
+
+    I used OpenCV in order to create usable format from a photo (numpy ndarray) that I could later feed into my neural network. 
+    
+    With a help of tensorflow.keras API I created a model of convolutional neural network. 
+    
+    The chosen parameters of my neural network are derived from multiple tests of accuracy. 
+
+    The structure of my neural network is as follows:
+    
 WEEK 6 ~ LANGUAGE
 
 Tasks: "Parser", "Questions"
