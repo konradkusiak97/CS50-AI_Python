@@ -27,15 +27,6 @@ I successfully completed the course and obtained the certificate.
 
    ![](IMG/CS50AI.png) 
 
-### Tasks: "Degrees", "Tic-Tac-Toe"
-    
-####    1. Degrees
-
-
-    
-The task involve using Breadth-search first (BFS) in order to find the corresponding path from one actor to another according to theory of Six Degrees of Kevin Bacon. 
-
-Example and full description of the task can be found on: https://cs50.harvard.edu/ai/projects/0/degrees/
 
 2. TicTacToe
 
